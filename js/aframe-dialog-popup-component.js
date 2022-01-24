@@ -232,7 +232,6 @@ AFRAME.registerComponent('dialog-popup', {
    * Handles opening and closing the dialog plane.
    */
   toggleDialogOpen: function toggleDialogOpen() {
-    console.log("OPEN DIALOG")
     this.isOpen = !this.isOpen;
 
     if (this.data.active && this.dialogPlaneEl) {
@@ -264,7 +263,7 @@ AFRAME.registerComponent('dialog-popup', {
       side: 'double'
     }); // If the parent entity has aa look-at component attached, apply the look-at
     // component to the openIcon.
-
+    openIcon.setAttribute("class", "clickable");
     // openIcon.setAttribute('raycaster', {objects:".raycastable"});
     var lookAt = this.el.getAttribute('look-at');
 
@@ -304,6 +303,7 @@ AFRAME.registerComponent('dialog-popup', {
       src: src,
       side: 'double'
     });
+    closeIcon.setAttribute("class", "clickable");
     // closeIcon.setAttribute('raycaster', {objects:".raycastable"});
     closeIcon.addEventListener(openOn, this.toggleDialogOpen.bind(this));
     this.closeIconEl = closeIcon;
@@ -366,6 +366,7 @@ AFRAME.registerComponent('dialog-popup', {
     body.setAttribute('id', "".concat(this.el.getAttribute('id'), "--title"));
     body.setAttribute('text', {
       value: value,
+      side: 'double',
       color: color,
       font: font,
       wrapCount: wrapCount,
@@ -384,6 +385,10 @@ AFRAME.registerComponent('dialog-popup', {
       y: y,
       z: 0.01
     });
+    // body.setAttribute('onmouseleave', function onMouseLeave(){
+    //   console.log("mouse leave");
+    // });
+    
     this.bodyEl = body;
     return body;
   },
@@ -449,6 +454,7 @@ AFRAME.registerComponent('dialog-popup', {
     plane.appendChild(this.generateTitle());
     plane.appendChild(this.generateBody());
     this.dialogPlaneEl = plane;
+
     return plane;
   },
   positionDialogPlane: function positionDialogPlane() {
@@ -459,7 +465,13 @@ AFRAME.registerComponent('dialog-popup', {
   },
   spawnEntities: function spawnEntities() {
     this.el.appendChild(this.generateOpenIcon());
-    this.el.appendChild(this.generateDialogPlane());
+    this.el.appendChild(this.generateDialogPlane());    
+    // this.el.onmouseenter = function(){
+    //   console.log("on mouse enter");
+    // };
+    // this.el.onmouseleave = function(){
+    //   console.log("on mouse leave");
+    // };
     // this.el.removeAttribute('position');
   }
 });
