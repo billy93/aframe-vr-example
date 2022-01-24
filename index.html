@@ -17,7 +17,7 @@
     <script src="js/extended-wasd-controls.js"></script>
     <script src="js/info-panel.js"></script>
     <script src="js/info-message.js"></script>
-
+	<script src="js/aframe-dialog-popup-component.js"></script>
 	<style type="text/css" data-href="src/style/aframe.css">
 		html.a-fullscreen {
 			bottom: 0;
@@ -551,16 +551,17 @@
 
 <body>
 	<a-scene 
-		sound="src: #backsound; on: click; loop: true; volume: 0.2; rolloffFactor: 0" 
 		background="color: #112" 
 		stats="" 
 		inspector="" 
 		keyboard-shortcuts="" 
 		screenshot="" 
 		vr-mode-ui=""
-		device-orientation-permission-ui="">
+		device-orientation-permission-ui=""
+		info-message="htmlSrc: #messageText">
 
 		<a-assets>
+			<a-asset-item id="messageText" src="message.html"></a-asset-item>
 			<audio id="backsound" src="audio/backsound.mp3" crossorigin="anonymous"></audio>
 
 			<a-mixin id="box" geometry="primitive: box; depth: .125; height: .125;
@@ -593,7 +594,7 @@
 
 			<a-mixin id="yoyo" animation="dir: alternate; loop: true"></a-mixin>
 			<a-mixin id="spin"
-				animation="property: object3D.rotation.y; to: 360; loop: true; easing: linear; dur: 10000">
+				animation="property: object3D.rotation.y; to: 360; loop: true; easing: linear; dur: 20000">
 			</a-mixin>
 			<a-mixin id="spinX" mixin="spin" animation="property: object3D.rotation.x"></a-mixin>
 			<a-mixin id="color" material="color: #FFFFC3"></a-mixin>
@@ -608,18 +609,21 @@
 			<img id="sky" src="images/stars.jpg" crossorigin="anonymous" />
 			<img id="hexagons" src="images/hexagons.png" crossorigin="anonymous" />
 		</a-assets>
-		<a-camera position="0 1.6 4" camera="" rotation="" look-controls="" wasd-controls=""></a-camera>
+		
+		<a-camera  id="camera" position="0 1.6 4" camera="" rotation="" look-controls="" wasd-controls="" cursor="rayOrigin: mouse"></a-camera>
 
 		<a-sky 
 			color = "#FFFFFF"
 			material = "src: #sky">
 		</a-sky>
 
+
 		<a-entity light="type: ambient; color: #444"></a-entity>
 		<a-entity light="type: directional; color: #EEE" position="0 1 1"></a-entity>
 		
 		<!-- Floor -->
-		<a-entity geometry="primitive: cylinder; height: 0; radius: 12;" material="color: #BABABA; src: #floor; metalness: .2; repeat: 50 20; roughness: .1" position="0 0 0"></a-entity>
+		<a-entity
+		geometry="primitive: cylinder; height: 0; radius: 12;" material="color: #BABABA; src: #floor; metalness: .2; repeat: 50 20; roughness: .1" position="0 0 0"></a-entity>
 		
 		<!-- Carpet -->
 		<a-entity geometry="primitive: box; depth: 20; height: 0.025; width: 2" material="color: #440000; metalness: 0; src: #carpet;
@@ -629,7 +633,25 @@
 		<a-entity position="-2.5 0 1">
             <a-entity mixin="column" geometry="" material="" position="">
 				<a-entity mixin="column-light" light="" position=""></a-entity>
-				<a-entity mixin="object-on-column doubleside circle spin" position="0 2 .1" material="src: #upcro; shader: flat" geometry="" animation__spin=""></a-entity>
+				<a-entity 
+					mixin="object-on-column doubleside circle spin" 
+					position="0 2 .1" 
+					material="src: #upcro; shader: flat" 
+					geometry="" 
+					dialog-popup="
+		openIconImage: images/info.jpg;
+		closeIconImage: images/close.jpg;
+		image: images/uptoken/upcro.png;
+		title: upCRO;
+		titleFont: roboto;
+		titleColor: #0d6efd;
+		body: Using our ERC-31337 technology, we first create a price floor by building our token within certain parameters. We are then able to extract all value from beneath the price floor that would otherwise be trapped.;
+		bodyFont: roboto;
+		bodyColor: #ffffff;
+		dialogBoxHeight: 3.5;
+		dialogBoxColor: #964f00;
+		"
+					></a-entity>
 			</a-entity>
 			<a-entity mixin="column-bottom" geometry="" material="" position=""></a-entity>
 		</a-entity>
@@ -637,7 +659,20 @@
 		<a-entity position="-2.5 0 -2">
 			<a-entity mixin="column" geometry="" material="" position="">
 				<a-entity mixin="column-light" light="" position=""></a-entity>
-				<a-entity mixin="object-on-column doubleside circle spin" position="0 2 .1" material="src: #upbnb; shader: flat" geometry="" animation__spin=""></a-entity>
+				<a-entity mixin="object-on-column doubleside circle spin" position="0 2 .1" material="src: #upbnb; shader: flat" geometry="" 
+				dialog-popup="
+		openIconImage: images/info.jpg;
+		closeIconImage: images/close.jpg;
+		image: images/uptoken/upbnb.png;
+		title: upBNB;
+		titleFont: roboto;
+		titleColor: #0d6efd;
+		body: Using our ERC-31337 technology, we first create a price floor by building our token within certain parameters. We are then able to extract all value from beneath the price floor that would otherwise be trapped.;
+		bodyFont: roboto;
+		bodyColor: #ffffff;
+		dialogBoxHeight: 3.5;
+		dialogBoxColor: #964f00;
+		"></a-entity>
 			</a-entity>
 			<a-entity mixin="column-bottom" geometry="" material="" position=""></a-entity>
 		</a-entity>
@@ -645,7 +680,20 @@
 		<a-entity position="2.5 0 1">
 			<a-entity mixin="column" geometry="" material="" position="">
 				<a-entity mixin="column-light" light="" position=""></a-entity>
-				<a-entity mixin="object-on-column doubleside circle spin" position="0 2 .1" material="src: #upcake; shader: flat" geometry="" animation__spin=""></a-entity>
+				<a-entity mixin="object-on-column doubleside circle spin" position="0 2 .1" material="src: #upcake; shader: flat" geometry="" 
+				dialog-popup="
+		openIconImage: images/info.jpg;
+		closeIconImage: images/close.jpg;
+		image: images/uptoken/upcake.png;
+		title: upCAKE;
+		titleFont: roboto;
+		titleColor: #0d6efd;
+		body: Using our ERC-31337 technology, we first create a price floor by building our token within certain parameters. We are then able to extract all value from beneath the price floor that would otherwise be trapped.;
+		bodyFont: roboto;
+		bodyColor: #ffffff;
+		dialogBoxHeight: 3.5;
+		dialogBoxColor: #964f00;
+		"></a-entity>
 			</a-entity>
 			<a-entity mixin="column-bottom" geometry="" material="" position=""></a-entity>
 		</a-entity>
@@ -653,7 +701,20 @@
 		<a-entity position="2.5 0 -2">
 			<a-entity mixin="column" geometry="" material="" position="">
 				<a-entity mixin="column-light" light="" position=""></a-entity>
-				<a-entity mixin="object-on-column doubleside circle spin" position="0 2 .1" material="src: #upmatic; shader: flat" geometry="" animation__spin=""></a-entity>
+				<a-entity mixin="object-on-column doubleside circle spin" position="0 2 .1" material="src: #upmatic; shader: flat" geometry="" 
+				dialog-popup="
+		openIconImage: images/info.jpg;
+		closeIconImage: images/close.jpg;
+		image: images/uptoken/upmatic.png;
+		title: upMatic;
+		titleFont: roboto;
+		titleColor: #0d6efd;
+		body: Using our ERC-31337 technology, we first create a price floor by building our token within certain parameters. We are then able to extract all value from beneath the price floor that would otherwise be trapped.;
+		bodyFont: roboto;
+		bodyColor: #ffffff;
+		dialogBoxHeight: 3.5;
+		dialogBoxColor: #964f00;
+		"></a-entity>
 			</a-entity>
 			<a-entity mixin="column-bottom" geometry="" material="" position=""></a-entity>
 		</a-entity>
@@ -661,46 +722,22 @@
 		<a-entity position="0 0 -4">
 			<a-entity mixin="column" geometry="" material="" position="">
 				<a-entity mixin="column-light" light="" position=""></a-entity>
-				<a-entity mixin="object-on-column doubleside circle spin" position="0 2 .1" material="src: #root; shader: flat" geometry="" animation__spin=""></a-entity>
+				<a-entity mixin="object-on-column doubleside circle spin" position="0 2 .1" material="src: #root; shader: flat" geometry="" 
+				dialog-popup="
+		openIconImage: images/info.jpg;
+		closeIconImage: images/close.jpg;
+		image: images/uptoken/root.jpg;
+		title: ROOT;
+		titleFont: roboto;
+		titleColor: #0d6efd;
+		body: Using our ERC-31337 technology, we first create a price floor by building our token within certain parameters. We are then able to extract all value from beneath the price floor that would otherwise be trapped.;
+		bodyFont: roboto;
+		bodyColor: #ffffff;
+		dialogBoxHeight: 3.5;
+		dialogBoxColor: #964f00;
+		"></a-entity>
 			</a-entity>
 			<a-entity mixin="column-bottom" geometry="" material="" position=""></a-entity>
-		</a-entity>
-
-		<a-entity id="ui" position="0 1.6 -2.5">
-			<!-- Poster menu -->
-			<a-entity id="menu" highlight>
-				<a-entity id="karigurashiButton" position="-0.8 0 0" mixin="frame" class="raycastable menu-button">
-				<a-entity material="src: #karigurashiPoster;" mixin="poster"></a-entity>
-				</a-entity>
-
-				<a-entity id="kazetachinuButton" position="0 0 0" mixin="frame" class="raycastable menu-button">
-				<a-entity material="src: #kazetachinuPoster" mixin="poster"></a-entity>
-				</a-entity>
-
-				<a-entity id="ponyoButton" position="0.8 0 0" mixin="frame" class="raycastable menu-button">
-				<a-entity material="src: #ponyoPoster" mixin="poster"></a-entity>
-				</a-entity>
-			</a-entity>
-
-			<!-- Info panel of the selected movie. -->
-			<a-entity
-				id="infoPanel"
-				position="0 0 0.5"
-				info-panel
-				visible="false"
-				scale="0.001 0.001 0.001"
-				geometry="primitive: plane; width: 1.5; height: 1.8"
-				material="color: #333333; shader: flat; transparent: false" class="raycastable">
-				<a-entity id="ponyoMovieImage" mixin="movieImage" material="src: #ponyo" visible="false"></a-entity>
-				<a-entity id="kazetachinuMovieImage" mixin="movieImage" material="src: #kazetachinu" visible="false"></a-entity>
-				<a-entity id="karigurashiMovieImage" mixin="movieImage" material="src: #karigurashi" visible="false"></a-entity>
-				<a-entity id="movieTitle"
-				position="-0.68 -0.1 0"
-				text="shader: msdf; anchor: left; width: 1.5; font: https://cdn.aframe.io/examples/ui/Viga-Regular.json; color: white; value: Ponyo (2003)"></a-entity>
-				<a-entity id="movieDescription"
-				position="-0.68 -0.2 0"
-				text="baseline: top; shader: msdf; anchor: left; font: https://cdn.aframe.io/examples/ui/Viga-Regular.json; color: white; value: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></a-entity>
-			</a-entity>
 		</a-entity>
 
 		<canvas class="a-canvas a-grab-cursor" data-aframe-canvas="true" width="950" height="918" style=""></canvas>
